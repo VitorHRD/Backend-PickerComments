@@ -28,16 +28,19 @@ async function start(url) {
         return comments;
     }
 
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+        headless: false,
+        defaultViewport: null,
+      });
     const page = await browser.newPage();
     await page.goto("https://www.instagram.com/accounts/login/");
     await page.waitForSelector('input[name="username"]');
     await page.type('input[name="username"]', process.env.EMAIL);
     await page.type('input[name="password"]', process.env.PASSWORD);
-    await page.waitForTimeout(5000);
+    await page.waitForTimeout(3000);
 
     await page.click('button[type="submit"]');
-    await page.waitForTimeout(5000);
+    await page.waitForTimeout(3000);
 
     await page.setUserAgent(
         "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36"
