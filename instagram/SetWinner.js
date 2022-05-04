@@ -1,5 +1,6 @@
 require('dotenv').config();
 const puppeteer = require('puppeteer');
+const setFunctions = require('./SetFunctions')
 
 async function start(url) {
     async function LoadMore(page, selector) {
@@ -8,7 +9,7 @@ async function start(url) {
             console.log("more")
             await page.waitForSelector(selector)
             await moreButton.click()
-            await page.waitForSelector(selector, { timeout: 3000 }).catch(() => {
+            await page.waitForSelector(selector, { timeout: 5000 }).catch(() => {
                 console.log("timeout")
             })
             await LoadMore(page, selector);
@@ -56,13 +57,13 @@ async function start(url) {
 
 
 
-    const sorted = sort(autorComments)
-    const counted = count(autorComments, textComments, imgComments)
+    const sorted = setFunctions.sort(autorComments)
+    const counted = setFunctions.count(autorComments, textComments, imgComments)
     const winner = counted.find((comment) => { return comment.id == sorted })
 
     if (winner === undefined) {
         await browser.close()
-        return start()
+        return start(url)
     }
     else {
         await browser.close()
@@ -74,16 +75,3 @@ async function start(url) {
 
 module.exports = {start}
 
-
-function sort(array) {
-    let length = Math.floor(Math.random() * array.length)
-
-    return length
-}
-
-function count(autorArray, commentsArray, autorImg) {
-    const count = [];
-    let id = 0;
-    autorArray.forEach(autor => { count.push({ id: id++, autorImg: autorImg[id], autor: autor, text: commentsArray[id] }) })
-    return count
-}
