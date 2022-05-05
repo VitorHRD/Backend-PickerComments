@@ -6,7 +6,7 @@ async function start(url) {
     async function LoadMore(page, selector) {
         const moreButton = await page.$(selector);
         if (moreButton) {
-            console.log("more")
+            console.log("more");
             await page.waitForSelector(selector)
             await moreButton.click()
             await page.waitForSelector(selector, { timeout: 5000 }).catch(() => {
@@ -43,9 +43,7 @@ async function start(url) {
     await page.click('button[type="submit"]');
     await page.waitForTimeout(3000);
 
-    await page.setUserAgent(
-        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36"
-    );
+    await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36');
     await page.goto(url);
     await LoadMore(page, 'svg[aria-label="Carregar mais comentários"]');
 

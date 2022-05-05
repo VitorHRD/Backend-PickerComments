@@ -7,6 +7,6 @@ router.use(cors())
 router.post("/insta",express.json(), (req , res)=>{
     const link = req.body.link
     console.log(link)
-    insta.start(link).then((a)=>{ res.send(a)})
+    insta.start(link).then((winner)=>{ res.send(winner)})
 })
 module.exports = router
