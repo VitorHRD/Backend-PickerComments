@@ -2,7 +2,7 @@ require('dotenv').config();
 const puppeteer = require('puppeteer');
 const setFunctions = require('./SetFunctions')
 
-async function start(url) {
+async function start(url , email , password) {
     async function LoadMore(page, selector) {
         const moreButton = await page.$(selector);
         if (moreButton) {
@@ -36,8 +36,8 @@ async function start(url) {
     const page = await browser.newPage();
     await page.goto("https://www.instagram.com/accounts/login/");
     await page.waitForSelector('input[name="username"]');
-    await page.type('input[name="username"]', process.env.EMAIL);
-    await page.type('input[name="password"]', process.env.PASSWORD);
+    await page.type('input[name="username"]', email);
+    await page.type('input[name="password"]', password);
     await page.waitForTimeout(3000);
 
     await page.click('button[type="submit"]');
@@ -45,6 +45,7 @@ async function start(url) {
 
     await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36');
     await page.goto(url);
+    await page.waitForTimeout(3000)
     await LoadMore(page, 'svg[aria-label="Carregar mais comentários"]');
 
     const autorComments = await getComments(page, ".C4VMK h3 ");
@@ -61,7 +62,7 @@ async function start(url) {
 
     if (winner === undefined) {
         await browser.close()
-        return start(url)
+        return start(url , process.env.EMAIL2 , process.env.PASSWORD )
     }
     else {
         await browser.close()
