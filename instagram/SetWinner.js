@@ -48,9 +48,9 @@ async function start(url , email , password) {
     await page.waitForTimeout(3000)
     await LoadMore(page, 'svg[aria-label="Carregar mais comentários"]');
 
-    const autorComments = await getComments(page, ".C4VMK h3 ");
-    const textComments = await getComments(page, ".C4VMK div.MOdxS ");
-    const imgComments = await getSrc(page, ".C7I1f img[src]");
+    const autorComments = await getComments(page, "._a9zr h3 ");
+    const textComments = await getComments(page, "._a9zr div.MOdxS ");
+    const imgComments = await getSrc(page, "._aa8h  img[src]");
 
 
 
